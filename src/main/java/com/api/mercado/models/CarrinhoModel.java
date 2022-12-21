@@ -1,10 +1,9 @@
 package com.api.mercado.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Entity(name = "TB_CARRINHO")
@@ -21,7 +20,7 @@ public class CarrinhoModel {
                 inverseJoinColumns = @JoinColumn(name = "produto_id"))
     private List<ProdutoModel> produtos = new ArrayList<>();
     @Column(nullable = false)
-    private double valorTotalCarrinho;
+    private BigDecimal valorTotalCarrinho;
     @Column(nullable = false)
     private boolean carrinhoFechado;
 
@@ -37,11 +36,11 @@ public class CarrinhoModel {
         this.produtos = produtos;
     }
 
-    public double getValorTotalCarrinho() {
+    public BigDecimal getValorTotalCarrinho() {
         return valorTotalCarrinho;
     }
 
-    public void setValorTotalCarrinho(double valorTotalCarrinho) {
+    public void setValorTotalCarrinho(BigDecimal valorTotalCarrinho) {
         this.valorTotalCarrinho = valorTotalCarrinho;
     }
 
@@ -59,8 +58,7 @@ public class CarrinhoModel {
         BeanUtils.copyProperties(produtoModel, produtoModelBanco);
         produtoModelBanco.setQuantidadeEstoque(quantidade);
         produtos.add(produtoModelBanco);
-        valorTotalCarrinho += produtoModelBanco.getPrecoProduto() * quantidade;
+        valorTotalCarrinho = valorTotalCarrinho.add(produtoModelBanco.getPrecoProduto().multiply(BigDecimal.valueOf(quantidade)));
 
     }
-
 }
