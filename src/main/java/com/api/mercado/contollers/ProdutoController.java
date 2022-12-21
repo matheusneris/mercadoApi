@@ -34,7 +34,7 @@ public class ProdutoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> editarProduto(@PathVariable(value = "id") UUID id, @RequestBody @Valid ProdutoDto produtoDto){
-        Optional <ProdutoModel> produtoModelOptional = produtoService.buscarPorId(id);
+        Optional <ProdutoModel> produtoModelOptional = produtoService.buscarProduto(id);
         if(produtoModelOptional.isPresent()){
             ProdutoModel produtoModel = new ProdutoModel();
             BeanUtils.copyProperties(produtoDto, produtoModel);
@@ -50,7 +50,7 @@ public class ProdutoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> buscarPorId(@PathVariable(value = "id") UUID id){
-        Optional<ProdutoModel> produtoModelOptional = produtoService.buscarPorId(id);
+        Optional<ProdutoModel> produtoModelOptional = produtoService.buscarProduto(id);
         if(produtoModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.OK).body(produtoModelOptional);
         }
@@ -64,10 +64,10 @@ public class ProdutoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletarPorId(@PathVariable(value = "id") UUID id){
-        Optional<ProdutoModel> produtoDeletado = produtoService.buscarPorId(id);
-        if(produtoDeletado.isPresent()){
+        Optional<ProdutoModel> produtoModelOptional = produtoService.buscarProduto(id);
+        if(produtoModelOptional.isPresent()){
             produtoService.deletarProduto(id);
-            return ResponseEntity.status(HttpStatus.OK).body(produtoDeletado);
+            return ResponseEntity.status(HttpStatus.OK).body(produtoModelOptional);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado!");
     }

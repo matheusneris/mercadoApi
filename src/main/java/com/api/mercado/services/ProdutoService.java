@@ -25,15 +25,13 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
-    public Optional<ProdutoModel> buscarPorId(UUID id){
+    public Optional<ProdutoModel> buscarProduto(UUID id){
         return produtoRepository.findById(id);
     }
 
     @Transactional
-    public Optional<ProdutoModel> deletarProduto(UUID id){
-        Optional produtoDeletado = produtoRepository.findById(id);
+    public void deletarProduto(UUID id){
         produtoRepository.deleteById(id);
-        return produtoDeletado;
     }
 
     public boolean existsByNomeProdutoAndFabricanteProduto(String nomeProduto, String fabricanteProduto){
