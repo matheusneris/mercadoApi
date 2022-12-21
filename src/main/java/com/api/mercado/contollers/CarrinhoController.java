@@ -46,4 +46,9 @@ public class CarrinhoController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<Object> buscarCarrinhos(){
+        return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.buscarCarrinhos());
+    }
+
 }
