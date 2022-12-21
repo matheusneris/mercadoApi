@@ -3,6 +3,8 @@ package com.api.mercado.dtos;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class ProdutoDto {
 
@@ -10,7 +12,7 @@ public class ProdutoDto {
     private String nomeProduto;
     @NotBlank
     private String fabricanteProduto;
-    private double precoProduto;
+    private BigDecimal precoProduto;
     private int quantidadeEstoque;
 
 }

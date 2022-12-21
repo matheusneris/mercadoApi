@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,7 +25,7 @@ public class ProdutoModel implements Serializable {
     @Column(nullable = false, length = 50)
     private String fabricanteProduto;
     @Column(nullable = false)
-    private double precoProduto;
+    private BigDecimal precoProduto;
     @Column(nullable = false)
     private int quantidadeEstoque;
 
@@ -61,11 +62,11 @@ public class ProdutoModel implements Serializable {
         this.fabricanteProduto = fabricanteProduto;
     }
 
-    public double getPrecoProduto() {
+    public BigDecimal getPrecoProduto() {
         return precoProduto;
     }
 
-    public void setPrecoProduto(double precoProduto) {
+    public void setPrecoProduto(BigDecimal precoProduto) {
         this.precoProduto = precoProduto;
     }
 
