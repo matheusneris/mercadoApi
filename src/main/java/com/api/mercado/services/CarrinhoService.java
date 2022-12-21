@@ -27,6 +27,7 @@ public class CarrinhoService {
         this.carrinhoRepository = carrinhoRepository;
     }
 
+    @Transactional
     public CarrinhoModel criarCarrinho(){
         CarrinhoModel carrinhoModel = new CarrinhoModel();
         carrinhoModel.setValorTotalCarrinho(BigDecimal.ZERO);
@@ -35,10 +36,15 @@ public class CarrinhoService {
         return carrinhoRepository.save(carrinhoModel);
     }
 
-    public Optional<CarrinhoModel> buscarCarrinhoPorId(UUID id){return carrinhoRepository.findById(id);}
+    public Optional<CarrinhoModel> buscarCarrinho(UUID id){return carrinhoRepository.findById(id);}
 
     public List<CarrinhoModel> buscarCarrinhos(){
         return carrinhoRepository.findAll();
+    }
+
+    @Transactional
+    public void deletarCarrinho(UUID id){
+        carrinhoRepository.deleteById(id);
     }
 
     @Transactional

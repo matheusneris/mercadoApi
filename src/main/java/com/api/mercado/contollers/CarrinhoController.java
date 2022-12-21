@@ -28,7 +28,7 @@ public class CarrinhoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> colocarProdutosCarrinho(@PathVariable(value = "id") UUID id, @RequestBody CarrinhoDto carrinhoDto){
-        Optional<CarrinhoModel> carrinhoModelOptional = carrinhoService.buscarCarrinhoPorId(id);
+        Optional<CarrinhoModel> carrinhoModelOptional = carrinhoService.buscarCarrinho(id);
         if(carrinhoModelOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carrinho não encontrado.");
         }else {
@@ -38,7 +38,7 @@ public class CarrinhoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> buscarPorId(@PathVariable(value = "id") UUID id){
-        Optional<CarrinhoModel> carrinhoModelOptional = carrinhoService.buscarCarrinhoPorId(id);
+        Optional<CarrinhoModel> carrinhoModelOptional = carrinhoService.buscarCarrinho(id);
         if(carrinhoModelOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carrinho não encontrado.");
         }else{
@@ -49,6 +49,16 @@ public class CarrinhoController {
     @GetMapping
     public ResponseEntity<Object> buscarCarrinhos(){
         return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.buscarCarrinhos());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deletarPorId(@PathVariable(value = "id") UUID id){
+        Optional<CarrinhoModel> carrinhoModelOptional = carrinhoService.buscarCarrinho(id);
+        if (carrinhoModelOptional.isPresent()){
+            carrinhoService.deletarCarrinho(id);
+            return ResponseEntity.status(HttpStatus.OK).body(carrinhoModelOptional);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carrinho não existe.");
     }
 
 }
